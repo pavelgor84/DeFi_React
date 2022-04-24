@@ -2,6 +2,8 @@
 
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+
 contract TokenFarm {
     //stake tokens
     //unstake tokens
@@ -9,7 +11,12 @@ contract TokenFarm {
     //add allowed tokens
     //getEthValue
 
-    address[] allowedTokens;
+    address[] public allowedTokens;
+
+    function stakeTokens(uint256 _amount, address _token) public {
+        require(_amount > 0, "The amount must be greather than 0");
+        require(isTokenAllowed(_token) == true);
+    }
 
     function addAllowedTokens(address _token) public {
         allowedTokens.push(_token);
@@ -22,10 +29,5 @@ contract TokenFarm {
             }
         }
         return false;
-    }
-
-    function stakeTokens(uint256 _amount, address _token) public {
-        require(_amount > 0, "The amount must be greather than 0");
-        require(isTokenAllowed(_token) == true);
     }
 }
