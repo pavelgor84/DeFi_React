@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract TokenFarm {
+contract TokenFarm is Ownable {
     //stake tokens
     //unstake tokens
     //issue tokens
@@ -18,7 +18,7 @@ contract TokenFarm {
         require(isTokenAllowed(_token) == true);
     }
 
-    function addAllowedTokens(address _token) public {
+    function addAllowedTokens(address _token) public onlyOwner {
         allowedTokens.push(_token);
     }
 
