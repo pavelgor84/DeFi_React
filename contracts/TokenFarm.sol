@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
 contract TokenFarm is Ownable {
-
     //stake tokens
     //unstake tokens
     //issue tokens
@@ -19,27 +18,33 @@ contract TokenFarm is Ownable {
     address[] stakers;
     IERC20 public dappToken;
 
-
-    constructor(address _dappToken){
+    constructor(address _dappToken) {
         dappToken = IERC20(_dappToken);
     }
 
-
     function issueTokens() public onlyOwner {
         // totalAmountEth = for each UniqueToken -> user -> totalAmountEth + amount of Eth(token)
-        for(uint256 i; i<stakers.length; i++){
-            uint256 userTotalAmount = 0;
-            address recepient = stakers[i];
-            userTotalAmount = getUserTotalAmount(recepient); // total amount for a certain user in the stakers array
-              
-            }
-            //transfer to the user userTotalAmount converted to DAPP token
+        for (uint256 i = 0; i < stakers.length; i++) {
+            address recipient = stakers[i];
+            userTotalAmount = getUserTotalAmount(recipient); // total amount for a certain user in the stakers array
+        }
+        //transfer to the user userTotalAmount converted to DAPP token
+    }
+
+    function getUserTotalAmount(address _recipient)
+        public
+        view
+        returns (uint256)
+    {
+        require(uniqueTokenStaked[_recipient] > 0, "Incorrect token");
+        uint256 userTotalAmount = 0;
+        for (uint256 j = 0; j < allowedTokens.length; j++) {
+            address userToken = allowedTokens[j];
+            userTotalAmount = userTotalAmount + userTokenAmount(userToken);
         }
     }
-    function getUserTotalAmount(address _recepient) public returns (uint256){
 
-    }
-
+    function userTokenAmount(address _token) public returns (uint256) {}
 
     function stakeTokens(uint256 _amount, address _token) public {
         require(_amount > 0, "The amount must be greather than 0");
