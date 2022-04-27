@@ -19,6 +19,15 @@ contract TokenFarm is Ownable {
 
     function issueTokens() public onlyOwner {
         // totalAmountEth = for each UniqueToken -> user -> totalAmountEth + amount of Eth(token)
+        for(uint256 i; i<stakers.length; i++){
+            uint256 userTotalAmount = 0;
+            //stakers[0]
+            for(uint256 j; j<allowedTokens.length; j++){
+                //allowedTokens[0]
+                userTotalAmount = userTokenAmount(address stakers[i],address allowedTokens[j]);
+            }
+            //transfer to the user userTotalAmount converted to DAPP token
+        }
     }
 
     function stakeTokens(uint256 _amount, address _token) public {
