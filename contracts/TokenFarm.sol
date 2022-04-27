@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
 contract TokenFarm is Ownable {
+
     //stake tokens
     //unstake tokens
     //issue tokens
@@ -16,19 +17,29 @@ contract TokenFarm is Ownable {
     mapping(address => mapping(address => uint256)) public stakingBalance; //token_address => user_address(wallet) => ammount
     mapping(address => uint256) public uniqueTokenStaked;
     address[] stakers;
+    IERC20 public dappToken;
+
+
+    constructor(address _dappToken){
+        dappToken = IERC20(_dappToken);
+    }
+
 
     function issueTokens() public onlyOwner {
         // totalAmountEth = for each UniqueToken -> user -> totalAmountEth + amount of Eth(token)
         for(uint256 i; i<stakers.length; i++){
             uint256 userTotalAmount = 0;
-            //stakers[0]
-            for(uint256 j; j<allowedTokens.length; j++){
-                //allowedTokens[0]
-                userTotalAmount = userTokenAmount(address stakers[i],address allowedTokens[j]);
+            address recepient = stakers[i];
+            userTotalAmount = getUserTotalAmount(recepient); // total amount for a certain user in the stakers array
+              
             }
             //transfer to the user userTotalAmount converted to DAPP token
         }
     }
+    function getUserTotalAmount(address _recepient) public returns (uint256){
+
+    }
+
 
     function stakeTokens(uint256 _amount, address _token) public {
         require(_amount > 0, "The amount must be greather than 0");
