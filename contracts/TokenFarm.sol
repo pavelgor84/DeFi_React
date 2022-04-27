@@ -17,15 +17,19 @@ contract TokenFarm is Ownable {
     mapping(address => uint256) public uniqueTokenStaked;
     address[] stakers;
 
+    function issueTokens() public onlyOwner {
+        // totalAmountEth = for each UniqueToken -> user -> totalAmountEth + amount of Eth(token)
+    }
+
     function stakeTokens(uint256 _amount, address _token) public {
         require(_amount > 0, "The amount must be greather than 0");
         require(isTokenAllowed(_token), "This token is currently not allowed");
         //transferFrom
         IERC20(_token).transferFrom(msg.sender, address(this), _amount);
+        checkUniqueStaker(msg.sender, _token); // !!need to revise this funciton, duplicate users = diff tokens
         stakingBalance[_token][msg.sender] =
             stakingBalance[_token][msg.sender] +
             _amount;
-        checkUniqueStaker(msg.sender, _token);
     }
 
     function checkUniqueStaker(address user, address token) {
