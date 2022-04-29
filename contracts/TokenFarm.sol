@@ -41,9 +41,11 @@ contract TokenFarm is Ownable {
         require(uniqueTokenStaked[_recipient] > 0, "Incorrect token");
         uint256 userTotalAmount = 0;
         for (uint256 j = 0; j < allowedTokens.length; j++) {
-            address userToken = userTotalAmount +
+            userTotalAmount =
+                userTotalAmount +
                 userSingleTokenAmount(_recipient, allowedTokens[j]);
         }
+        return userTotalAmount;
     }
 
     function userSingleTokenAmount(address _user, address _token)
@@ -54,7 +56,8 @@ contract TokenFarm is Ownable {
         if (uniqueTokenStaked[_user] <= 0) {
             return 0;
         }
-        uint256 tokenPrice = getConvertedPrice(_token);
+        (uint256 tokenPrice, uint256 decimals) = getConvertedPrice(_token);
+        return ((stakingBalance[_token][_user] * tokenPrice) / 10**decimals);
     }
 
     function getConvertedPrice(address _token)
