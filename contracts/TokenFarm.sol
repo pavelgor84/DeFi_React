@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract TokenFarm is Ownable {
     //stake tokens
@@ -15,6 +16,7 @@ contract TokenFarm is Ownable {
     address[] public allowedTokens;
     mapping(address => mapping(address => uint256)) public stakingBalance; //token_address => user_address(wallet) => ammount
     mapping(address => uint256) public uniqueTokenStaked;
+    mapping(address => address) public tokenPriceFeed;
     address[] stakers;
     IERC20 public dappToken;
 
@@ -55,7 +57,26 @@ contract TokenFarm is Ownable {
         uint256 tokenPrice = getConvertedPrice(_token);
     }
 
-    function getConvertedPrice(address _token) public view {}
+    function getConvertedPrice(address _token)
+        public
+        view
+        returns (uint256, uint256)
+    {
+        address priceFeedAddress = tokenPriceFeed[_token];
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(
+            priceFeedAddress
+        );
+        (, int256 price, , , ) = priceFeed.latestRoundData();
+        uint256 decimals = uint256(priceFeed.decimals());
+        return (uint256(price), decimals);
+    }
+
+    function addPriceFeed(address _token, address _aggregator)
+        public
+        onlyOwner
+    {
+        tokenPriceFeed[_token] = _aggregator;
+    }
 
     function stakeTokens(uint256 _amount, address _token) public {
         require(_amount > 0, "The amount must be greather than 0");
