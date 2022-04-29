@@ -29,8 +29,8 @@ contract TokenFarm is Ownable {
         for (uint256 i = 0; i < stakers.length; i++) {
             address recipient = stakers[i];
             uint256 userTotalAmount = getUserTotalAmount(recipient); // total amount for a certain user in the stakers array
+            dappToken.transfer(recipient, userTotalAmount); //transfer to the user userTotalAmount converted to DAPP token
         }
-        //transfer to the user userTotalAmount converted to DAPP token
     }
 
     function getUserTotalAmount(address _recipient)
@@ -79,6 +79,15 @@ contract TokenFarm is Ownable {
         onlyOwner
     {
         tokenPriceFeed[_token] = _aggregator;
+    }
+
+    function unstakeTokens(address _token) public {
+        require(
+            stakingBalance[_token][msg.sender] > 0,
+            "You have no tokens here."
+        );
+        IERC20(_token).transfer(msg.sender, stakingBalance[_token][msg.sender]);
+        uniqueTokenStaked[msg.sender] = 0;
     }
 
     function stakeTokens(uint256 _amount, address _token) public {
