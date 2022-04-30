@@ -16,6 +16,7 @@ def deploy_token_farm_and_dapp_token():
     tx = dappToken.transfer(
         tokenFarm.address, dappToken.totalSupply() - KEPT_BALANCE, {"from": account}
     )
+    tx.wait(1)
 
 
 def main():
