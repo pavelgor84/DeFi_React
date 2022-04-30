@@ -1,4 +1,4 @@
-from scripts.helpful_scripts import get_account
+from scripts.helpful_scripts import get_account, get_contract
 from brownie import DappToken, TokenFarm, network, config
 from web3 import Web3
 
@@ -15,8 +15,12 @@ def deploy_token_farm_and_dapp_token():
     )
     tx = dappToken.transfer(
         tokenFarm.address, dappToken.totalSupply() - KEPT_BALANCE, {"from": account}
-    )
+    )  # Add own DappTokens to this contract
     tx.wait(1)
+
+
+def add_allowed_tokens():
+    pass
 
 
 def main():
