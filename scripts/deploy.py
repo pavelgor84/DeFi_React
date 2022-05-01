@@ -29,6 +29,7 @@ def deploy_token_farm_and_dapp_token():
     }
 
     add_allowed_tokens(tokenFarm, allowed_token_dictionary, account)
+    return tokenFarm, dapp_token
 
 
 def add_allowed_tokens(token_farm, token_dictionary, account):
@@ -38,6 +39,8 @@ def add_allowed_tokens(token_farm, token_dictionary, account):
         tx_feed = token_farm.addPriceFeed(
             token.address, token_dictionary[token], {"from": account}
         )
+        tx_feed.wait(1)
+    return token_farm
 
 
 def main():
