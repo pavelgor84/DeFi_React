@@ -3,19 +3,19 @@ from scripts.helpful_scripts import get_account, get_contract
 from brownie import DappToken, TokenFarm, network, config
 from web3 import Web3
 
-KEPT_BALANCE = Web3.toWhei(100, "ether")
+KEPT_BALANCE = Web3.toWei(100, "ether")
 
 
 def deploy_token_farm_and_dapp_token():
     account = get_account()
     dapp_token = DappToken.deploy({"from": account})
     tokenFarm = TokenFarm.deploy(
-        dappToken.address,
+        dapp_token.address,
         {"from": account},
         publish_source=config["networks"][network.show_active()].get("verify", False),
     )
-    tx = dappToken.transfer(
-        tokenFarm.address, dappToken.totalSupply() - KEPT_BALANCE, {"from": account}
+    tx = dapp_token.transfer(
+        tokenFarm.address, dapp_token.totalSupply() - KEPT_BALANCE, {"from": account}
     )  # Add own DappTokens to this contract
     tx.wait(1)
 

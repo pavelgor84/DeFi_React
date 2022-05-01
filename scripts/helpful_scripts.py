@@ -3,7 +3,7 @@ from brownie import (
     accounts,
     config,
     MockV3Aggregator,
-    MockWeth,
+    MockWETH,
     MockDAI,
     Contract,
 )
@@ -19,7 +19,7 @@ LOCAL_BLOCKCHAIN_ENVIRONMENTS = NON_FORKED_LOCAL_BLOCKCHAIN_ENVIRONMENTS + [
 contract_to_mock = {
     "eth_usd_price_feed": MockV3Aggregator,
     "dai_usd_price_feed": MockV3Aggregator,
-    "weth_token": MockWeth,
+    "weth_token": MockWETH,
     "fau_token": MockDAI,
 }
 
@@ -103,5 +103,5 @@ def deploy_mocks(decimals=DECIMALS, initial_value=INITIAL_VALUE):
     mock_dai_token = MockDAI.deploy({"from": account})
     print(f"Deployed to {mock_dai_token}")
     print("Deploying Mock Weth token...")
-    mock_weth_token = MockWeth.deploy({"from": account})
+    mock_weth_token = MockWETH.deploy({"from": account})
     print(f"Deployed to {mock_weth_token}")
