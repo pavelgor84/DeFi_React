@@ -45,3 +45,14 @@ def test_stake_tokens(amount_staked):
     assert (
         token_farm.stakingBalance(dapp_token.address, account.address) == amount_staked
     )
+    assert token_farm.uniqueTokenStaked(account.address) == 1
+    assert token_farm.stakers(0) == account.address
+    return token_farm, dapp_token
+
+
+def test_issue_token(amount_staked):
+    # Arrange
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        pytest.skip()
+    account = get_account()
+    token_farm, dapp_token = test_stake_tokens(amount_staked)
