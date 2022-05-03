@@ -3,6 +3,7 @@ import pytest
 from brownie import network, exceptions
 from scripts.helpful_scripts import (
     LOCAL_BLOCKCHAIN_ENVIRONMENTS,
+    INITIAL_VALUE,
     get_account,
     get_contract,
 )
@@ -56,3 +57,8 @@ def test_issue_token(amount_staked):
         pytest.skip()
     account = get_account()
     token_farm, dapp_token = test_stake_tokens(amount_staked)
+    starting_balance = dapp_token.balanceOf(account.address)
+    # Act
+    token_farm.issueTokens({"from": account})
+    # Assert
+    assert dapp_token.balanceOf(account.address) == starting_balance + INITIAL_VALUE
