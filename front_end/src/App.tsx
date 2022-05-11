@@ -1,18 +1,15 @@
 import React from 'react';
-
 import { DAppProvider, ChainId } from "@usedapp/core"
+import Header from './components/Header';
 
-function App() {
+export default function App() {
 
-  const config = {
-    supportedChains: [ChainId.Rinkeby, ChainId.Kovan, 1337]
-  }
 
   return (
-    <DAppProvider config={config}>
-      <div>Test</div>
+    <DAppProvider config={{}}>
+      <Header />
     </DAppProvider>
   );
+
 }
 
-export default App;
