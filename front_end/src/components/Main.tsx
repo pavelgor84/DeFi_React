@@ -3,6 +3,18 @@ import { useEthers } from "@usedapp/core"
 import helper_config from "../helper-config.json"
 import networkMapping from "../chain-info/deployments/map.json"
 import { constants } from "ethers"
+import brownieConfig from "../brownie-config.json"
+import dai from "../dai.png"
+import dapp from "../dapp.png"
+import eth from "../eth.png"
+import YourWallet from "./yourWallet/yourWllet"
+import Header from "./Header"
+
+export type Token = {
+    address: string,
+    image: string,
+    name: string
+}
 
 
 export default function Main() {
@@ -16,11 +28,32 @@ export default function Main() {
     const { chainId, error } = useEthers()
     const network_name = chainId ? helper_config[chainId] : "dev"
     const dappTokenAddress = chainId ? networkMapping[chainId]["DappToken"][0] : constants.AddressZero
-    console.log(typeof (chainId), chainId, dappTokenAddress)
+    const wethTokenAddress = chainId ? brownieConfig["networks"][network_name]["weweth_tokenth"] : constants.AddressZero
+    const fauTokenAddress = chainId ? brownieConfig["networks"][network_name]["fau_token"] : constants.AddressZero
+    //console.log(typeof (chainId), chainId, dappTokenAddress)
+
+    const allowedTokens: Array<Token> = [
+        {
+            address: fauTokenAddress,
+            image: dai,
+            name: "DAI"
+
+        },
+        {
+            address: dappTokenAddress,
+            image: dapp,
+            name: "DAPP"
+        },
+        {
+            address: wethTokenAddress,
+            image: eth,
+            name: "WETH",
+        }
+    ]
 
     return (
         <div>
-            main content
+            <YourWallet allowedTokens={allowedTokens} />
 
         </div>
     )
