@@ -7,8 +7,8 @@ import brownieConfig from "../brownie-config.json"
 import dai from "../dai.png"
 import dapp from "../dapp.png"
 import eth from "../eth.png"
-import YourWallet from "./yourWallet/yourWllet"
-import Header from "./Header"
+import YourWallet from "./yourWallet/YourWllet"
+
 
 export type Token = {
     address: string,
@@ -28,7 +28,7 @@ export default function Main() {
     const { chainId, error } = useEthers()
     const network_name = chainId ? helper_config[chainId] : "dev"
     const dappTokenAddress = chainId ? networkMapping[chainId]["DappToken"][0] : constants.AddressZero
-    const wethTokenAddress = chainId ? brownieConfig["networks"][network_name]["weweth_tokenth"] : constants.AddressZero
+    const wethTokenAddress = chainId ? brownieConfig["networks"][network_name]["weth_token"] : constants.AddressZero
     const fauTokenAddress = chainId ? brownieConfig["networks"][network_name]["fau_token"] : constants.AddressZero
     //console.log(typeof (chainId), chainId, dappTokenAddress)
 

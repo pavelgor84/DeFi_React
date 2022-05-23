@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Token } from "../Main"
 import { Box, Tab } from "@material-ui/core"
 import { TabList, TabPanel, TabContext } from "@material-ui/lab"
+import WalletBalance from "./WalletBalance"
 
 interface yourWalletProps {
     allowedTokens: Array<Token>
@@ -22,6 +23,19 @@ export default function YourWallet({ allowedTokens }: yourWalletProps) {
             )
         }
     )
+    const tokenForm = allowedTokens.map(
+        (token, index) => {
+            return (
+                <TabPanel value={index.toString()} key={index}>
+                    <div>
+                        1.Amount <WalletBalance token={token} />
+                        2. Stake
+                    </div>
+                </TabPanel>
+            )
+        }
+    )
+
 
 
     return (
@@ -29,10 +43,10 @@ export default function YourWallet({ allowedTokens }: yourWalletProps) {
             <h1>Your wallet:</h1>
             <Box>
                 <TabContext value={tokenIndex}>
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                    <TabList onChange={handleChange} aria-label="Stake form tabs">
                         {tokenList}
-
                     </TabList>
+                    {tokenForm}
 
                 </TabContext>
 
