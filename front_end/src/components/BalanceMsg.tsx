@@ -25,8 +25,14 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function BalanceMsg({ label, amount, imageSrc }: BalanceMsgProps) {
+
+    const classes = useStyles();
+
     return (
-        <div>
+        <div className={classes.container}>
+            {label}
+            <div className={classes.amount}>{amount}</div>
+            <img className={classes.tokenImg} src={imageSrc} alt="Token logo"></img>
 
         </div>
     )

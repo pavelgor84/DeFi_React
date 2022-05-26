@@ -3,6 +3,7 @@ import { Token } from "../Main"
 import { Box, Tab } from "@material-ui/core"
 import { TabList, TabPanel, TabContext } from "@material-ui/lab"
 import WalletBalance from "./WalletBalance"
+import StakeForm from "./StakeForm"
 
 interface yourWalletProps {
     allowedTokens: Array<Token>
@@ -11,7 +12,7 @@ interface yourWalletProps {
 
 export default function YourWallet({ allowedTokens }: yourWalletProps) {
 
-    const [tokenIndex, setTokenIndex] = useState("0")
+    const [tokenIndex, setTokenIndex] = useState<string>("0")
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setTokenIndex(newValue);
     };
@@ -28,8 +29,9 @@ export default function YourWallet({ allowedTokens }: yourWalletProps) {
             return (
                 <TabPanel value={index.toString()} key={index}>
                     <div>
-                        1.Amount <WalletBalance token={token} />
-                        2. Stake
+                        <WalletBalance token={token} />
+                        <StakeForm token={token} />
+
                     </div>
                 </TabPanel>
             )
