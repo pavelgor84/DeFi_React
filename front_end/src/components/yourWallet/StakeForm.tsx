@@ -2,7 +2,7 @@ import { useEthers, useTokenBalance, useNotifications } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
 import { Token } from "../Main"
 import { formatUnits } from "ethers/lib/utils";
-import { Button, Input } from "@material-ui/core";
+import { Button, Input, CircularProgress } from "@material-ui/core";
 import { useStakeToken } from "../../hooks/useStakeTokens";
 import { utils } from "ethers"
 
@@ -26,11 +26,13 @@ export default function StakeForm({ token }: TokenFormProps) {
         setAmount(stakeAmonut);
     }
 
-    const { sendApproveAndStake, approveErc20State } = useStakeToken(tokenAddress)
+    const { sendApproveAndStake, overallState: approveErc20AndStakeState } = useStakeToken(tokenAddress)
     const handleClick = () => {
         const amounInWei = utils.parseEther(amount.toString())
         return sendApproveAndStake(amounInWei.toString())
     }
+
+    const isMinig = approveErc20AndStakeState.status === "Mining";
 
     useEffect(() => {
         if (notifications.filter((notification) => notification.type === "transactionSucceed" && notification.transactionName === "Approve ERC20 token").length > 0) {
@@ -44,7 +46,12 @@ export default function StakeForm({ token }: TokenFormProps) {
     return (
         <div>
             <Input onChange={handleChange} />
-            <Button onClick={handleClick} color="primary" size="large"> Stake asset</Button>
+            <Button
+                disabled={isMinig}
+                onClick={handleClick}
+                color="primary"
+                size="large">
+                {isMinig ? <CircularProgress /> : "Stake asset"}</Button>
 
         </div>
     )
