@@ -10,6 +10,10 @@ const config: Config = {
   readOnlyUrls: {
     [Kovan.chainId]: getDefaultProvider('kovan'),
   },
+  notifications: {
+    expirationPeriod: 1000,
+    checkInterval: 1000
+  }
 }
 
 export default function App() {

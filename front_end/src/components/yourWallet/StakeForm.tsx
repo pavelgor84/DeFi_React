@@ -1,5 +1,5 @@
-import { useEthers, useTokenBalance, } from "@usedapp/core";
-import React, { useState } from "react";
+import { useEthers, useTokenBalance, useNotifications } from "@usedapp/core";
+import React, { useEffect, useState } from "react";
 import { Token } from "../Main"
 import { formatUnits } from "ethers/lib/utils";
 import { Button, Input } from "@material-ui/core";
@@ -19,6 +19,8 @@ export default function StakeForm({ token }: TokenFormProps) {
 
     const [amount, setAmount] = useState<number | string>(0)
 
+    const { notifications } = useNotifications();
+
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const stakeAmonut: number = event.target.value == "" ? 0 : Number(event.target.value);
         setAmount(stakeAmonut);
@@ -29,6 +31,15 @@ export default function StakeForm({ token }: TokenFormProps) {
         const amounInWei = utils.parseEther(amount.toString())
         return sendApproveAndStake(amounInWei.toString())
     }
+
+    useEffect(() => {
+        if (notifications.filter((notification) => notification.type === "transactionSucceed" && notification.transactionName === "Approve ERC20 token").length > 0) {
+            console.log("APPROVED!")
+        }
+        if (notifications.filter((notification) => notification.type === "transactionSucceed" && notification.transactionName === "Stake erc20 tokens").length > 0) {
+            console.log("STAKED!")
+        }
+    }, [notifications])
 
     return (
         <div>
