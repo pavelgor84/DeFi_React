@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import { getDefaultProvider } from 'ethers';
 
+
 const config: Config = {
   readOnlyChainId: Kovan.chainId,
   readOnlyUrls: {
