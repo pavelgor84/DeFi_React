@@ -21,7 +21,7 @@ export default function WalletBalance({ token }: WalletBalanceProps) {
     return (
         <div>
             <BalanceMsg
-                label={`Your unstaked ${name} balance.`}
+                label={`Your unstaked ${name} balance:`}
                 imageSrc={image}
                 amount={formattedTokenBalance}
             />

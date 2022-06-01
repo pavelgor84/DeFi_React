@@ -8,6 +8,15 @@ import dai from "../dai.png"
 import dapp from "../dapp.png"
 import eth from "../eth.png"
 import YourWallet from "./yourWallet/YourWllet"
+import { makeStyles } from "@material-ui/core"
+
+const useStyles = makeStyles((theme) => ({
+    title: {
+        color: theme.palette.primary.main,
+        textAlign: "center",
+        padding: theme.spacing(4)
+    }
+}));
 
 
 export type Token = {
@@ -25,6 +34,7 @@ export default function Main() {
     //Send the brownie-config to our 'src' folder
     //Send the build folder
 
+    const classes = useStyles();
     const { chainId, error } = useEthers()
     const network_name = chainId ? helper_config[chainId] : "dev"
     const dappTokenAddress = chainId ? networkMapping[chainId]["DappToken"][0] : constants.AddressZero
@@ -53,6 +63,7 @@ export default function Main() {
 
     return (
         <div>
+            <h2 className={classes.title}> Staking tokens. TestNet Kovan network.</h2>
             <YourWallet allowedTokens={allowedTokens} />
 
         </div>
