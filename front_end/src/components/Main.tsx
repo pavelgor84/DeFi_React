@@ -40,7 +40,7 @@ export default function Main() {
     const dappTokenAddress = chainId ? networkMapping[chainId]["DappToken"][0] : constants.AddressZero
     const wethTokenAddress = chainId ? brownieConfig["networks"][network_name]["weth_token"] : constants.AddressZero
     const fauTokenAddress = chainId ? brownieConfig["networks"][network_name]["fau_token"] : constants.AddressZero
-    //console.log(typeof (chainId), chainId, dappTokenAddress)
+    console.log("File link test: " + networkMapping["42"]["DappToken"])
 
     const allowedTokens: Array<Token> = [
         {
