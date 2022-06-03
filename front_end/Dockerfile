@@ -10,5 +10,5 @@ COPY public/ ./public
 RUN yarn build
 COPY server.js ./
 
-EXPOSE 5000
+EXPOSE 443
 CMD ["node", "server.js"]
