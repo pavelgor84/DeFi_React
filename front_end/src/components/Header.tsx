@@ -8,7 +8,10 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "flex-end",
         gap: theme.spacing(1)
-    }
+    },
+    button: {
+        color: "MediumSlateBlue"
+    },
 }))
 
 export default function Header() {
@@ -18,7 +21,7 @@ export default function Header() {
     return (
         <div className={classes.container}>
             <div>
-                {account ? <p>Account: {account}</p> : <Button variant="text" onClick={() => activateBrowserWallet()}>Connect</Button>}
+                {account ? <p>Account: {account}</p> : <Button className={classes.button} variant="text" onClick={() => activateBrowserWallet()}>Connect</Button>}
             </div>
 
         </div>
