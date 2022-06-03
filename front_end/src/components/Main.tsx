@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
     title: {
-        color: theme.palette.primary.main,
+        color: "MidnightBlue",
         textAlign: "center",
         padding: theme.spacing(4)
     }

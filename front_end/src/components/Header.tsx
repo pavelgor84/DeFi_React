@@ -21,7 +21,7 @@ export default function Header() {
     return (
         <div className={classes.container}>
             <div>
-                {account ? <p>Account: {account}</p> : <Button className={classes.button} variant="text" onClick={() => activateBrowserWallet()}>Connect</Button>}
+                {account ? <p>Account: {account}</p> : <Button variant="contained" onClick={() => activateBrowserWallet()}>Connect your wallet</Button>}
             </div>
 
         </div>
